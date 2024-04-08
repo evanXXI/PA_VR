@@ -3,20 +3,24 @@ using UnityEngine;
 public class TriggerDetector : MonoBehaviour
 {
     public GameObject objectToMove;
-    public GameObject TriggerToMove;
     public int count = 0;
     public bool operating = false;
     public float countdownTime = 15f; 
     public float remainingTime { get; private set; }
+    public AudioSource audioActivate;
+    public AudioSource randomAudio;
+    public AudioClip[] audioClips;
     private bool isMoving = false;
     private bool movingLeft = true;
     private bool reset = false;
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
             operating = true;
+            audioActivate.Play();
             count = 0;
             remainingTime = countdownTime;
             StartCoroutine(StartCountdown());
@@ -57,7 +61,7 @@ public class TriggerDetector : MonoBehaviour
         if (other.gameObject.tag == "Sphere" && operating)
         {
             count += 15;
-
+            PlayRandomSound(); 
             if (count == 75)
             {
                 isMoving = true;
@@ -73,7 +77,6 @@ public class TriggerDetector : MonoBehaviour
         if (objectToMove.transform.position.x > targetX)
         {
             objectToMove.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            TriggerToMove.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
         else
         {
@@ -89,7 +92,6 @@ public class TriggerDetector : MonoBehaviour
         if (objectToMove.transform.position.x < targetX)
         {
             objectToMove.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
-            TriggerToMove.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
         }
         else
         {
@@ -105,17 +107,25 @@ public class TriggerDetector : MonoBehaviour
         if (objectToMove.transform.position.x < targetX)
         {
             objectToMove.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
-            TriggerToMove.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
         }
         else if(objectToMove.transform.position.x > targetX)
         {
             objectToMove.transform.Translate(Vector3.forward * speed * Time.deltaTime);
-            TriggerToMove.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
         if(objectToMove.transform.position.x > targetX - 0.005 && objectToMove.transform.position.x < targetX + 0.005)
         {
         reset = true;
         }
         
+    }
+      public void PlayRandomSound()
+    {
+        if (audioClips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, audioClips.Length);
+            AudioClip randomClip = audioClips[randomIndex]; 
+            randomAudio.clip = randomClip; 
+            randomAudio.Play(); 
+        }
     }
 }
