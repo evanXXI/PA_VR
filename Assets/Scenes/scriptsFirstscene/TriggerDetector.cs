@@ -5,6 +5,7 @@ public class TriggerDetector : MonoBehaviour
     public GameObject objectToMove;
     public int count = 0;
     public bool operating = false;
+    public bool start = false;
     public float countdownTime = 15f; 
     public float remainingTime { get; private set; }
     public AudioSource audioActivate;
@@ -23,8 +24,9 @@ public class TriggerDetector : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) || start)
         {
+            start = false;
             operating = true;
             audioActivate.Play();
             count = 0;
@@ -48,6 +50,7 @@ public class TriggerDetector : MonoBehaviour
         {
             ResetHoopPosition();
         }
+    
     }
 
     private System.Collections.IEnumerator StartCountdown()

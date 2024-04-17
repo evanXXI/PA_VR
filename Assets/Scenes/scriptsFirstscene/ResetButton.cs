@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit; 
 
-public class StartButton : MonoBehaviour
+public class ResetButton : MonoBehaviour
 {
-    public TriggerDetector TriggerDetector; 
+    public UIManager UIManager; 
     
     void Start()
     {
@@ -13,7 +13,6 @@ public class StartButton : MonoBehaviour
     
     void operating()
     { 
-        TriggerDetector.start = true;
-        Debug.Log(TriggerDetector.start);
+        UIManager.reset = true;
     }
 }

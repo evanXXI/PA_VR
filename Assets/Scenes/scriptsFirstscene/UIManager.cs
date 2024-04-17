@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
 
         if (reset || Input.GetKeyDown(KeyCode.R))
         {
+            reset = false;
             triggerDetector.count = 0;
             ResetHighScore();
         }
