@@ -8,12 +8,18 @@ public class TriggerDetector : MonoBehaviour
     public float countdownTime = 15f; 
     public float remainingTime { get; private set; }
     public AudioSource audioActivate;
+    public AudioSource audioBuzzer;
     public AudioSource randomAudio;
     public AudioClip[] audioClips;
     private bool isMoving = false;
     private bool movingLeft = true;
     private bool reset = false;
+    private float ObjCoord;
 
+    
+    private void Start() {
+        ObjCoord = objectToMove.transform.position.x;
+    }
 
     private void Update()
     {
@@ -50,6 +56,10 @@ public class TriggerDetector : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             remainingTime--;
+            if(remainingTime == 1)
+            {
+                audioBuzzer.Play();
+            }
         }
         operating = false;
         isMoving = false;
@@ -69,10 +79,10 @@ public class TriggerDetector : MonoBehaviour
         }
     }
 
-    private void MoveHoopLeft()
+     private void MoveHoopLeft()
     {
-        float speed = 1.0f;
-        float targetX = 7.97f;
+        float speed = 0.4f;
+        float targetX = ObjCoord - 0.7f;
 
         if (objectToMove.transform.position.x > targetX)
         {
@@ -86,8 +96,8 @@ public class TriggerDetector : MonoBehaviour
 
     private void MoveHoopRight()
     {
-        float speed = 1.0f;
-        float targetX = 11.5f;
+        float speed = 0.4f;
+        float targetX = ObjCoord + 0.7f;
 
         if (objectToMove.transform.position.x < targetX)
         {
@@ -101,18 +111,17 @@ public class TriggerDetector : MonoBehaviour
 
     private void ResetHoopPosition()
     {
-        float speed = 1.0f;
-        float targetX = 9.7f;
+        float speed = 0.4f;; 
 
-        if (objectToMove.transform.position.x < targetX)
+        if (objectToMove.transform.position.x < ObjCoord)
         {
             objectToMove.transform.Translate(-Vector3.forward * speed * Time.deltaTime);
         }
-        else if(objectToMove.transform.position.x > targetX)
+        else if(objectToMove.transform.position.x > ObjCoord)
         {
             objectToMove.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if(objectToMove.transform.position.x > targetX - 0.005 && objectToMove.transform.position.x < targetX + 0.005)
+        if(objectToMove.transform.position.x > ObjCoord - 0.005 && objectToMove.transform.position.x < ObjCoord + 0.005)
         {
         reset = true;
         }

@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit; 
 
-public class StartBotton : MonoBehaviour
+public class ResetButton : MonoBehaviour
 {
-    public TriggerDetector triggerDetector; 
-   
+    public UIManager UIManager; 
     
-
-    void Update()
+    void Start()
+    {
+        GetComponent<XRSimpleInteractable>().selectEntered.AddListener(x => operating());
+    }
+    
+    void operating()
     { 
-        triggerDetector.operating = true;
+        UIManager.reset = true;
     }
 }

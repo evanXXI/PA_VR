@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public Text TimeText;
     public TriggerDetector triggerDetector;
     public AudioSource audioHighscore;
+    public bool reset = false;
     private int highscore = 0;
     private bool playHighscoreAudio = false;
 
@@ -34,7 +35,7 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (reset)
         {
             triggerDetector.count = 0;
             ResetHighScore();
@@ -54,5 +55,6 @@ public class UIManager : MonoBehaviour
         PlayerPrefs.SetInt("BestScore", highscore);
         PlayerPrefs.Save();
         highestText.text = highscore.ToString();
+        reset = false;
     }
 }
