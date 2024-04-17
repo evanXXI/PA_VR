@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        if (reset)
+        if (reset || Input.GetKeyDown(KeyCode.R))
         {
             triggerDetector.count = 0;
             ResetHighScore();
