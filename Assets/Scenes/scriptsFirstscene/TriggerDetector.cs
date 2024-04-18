@@ -6,7 +6,7 @@ public class TriggerDetector : MonoBehaviour
     public int count = 0;
     public bool operating = false;
     public bool start = false;
-    public float countdownTime = 15f; 
+    public float countdownTime = 60f; 
     public float remainingTime { get; private set; }
     public AudioSource audioActivate;
     public AudioSource audioBuzzer;
